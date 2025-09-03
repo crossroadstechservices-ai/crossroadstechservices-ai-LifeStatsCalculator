@@ -59,6 +59,20 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
         .subtitle {
@@ -365,6 +379,12 @@
             
             h1 {
                 font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .logo-icon {
+                font-size: 3rem;
             }
             
             .container {
@@ -377,7 +397,7 @@
     <div class="container">
         <header>
             <div class="header-decoration"></div>
-            <h1>📊 Life Stats Calculator</h1>
+            <h1><span class="logo-icon">📊</span> Life Stats Calculator</h1>
             <p class="subtitle">Discover your life journey with beautiful, personalized insights</p>
         </header>
 
