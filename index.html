@@ -1,677 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Stats Calculator - Days Lived, Life Expectancy & Birthday Countdown</title>
-    <meta name="description" content="Modern life statistics calculator - discover your days lived, life expectancy, birthday countdown and personalized life insights.">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Life Stats Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      color: #2d3748;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            min-height: 100vh;
-            color: #1a1a1a;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+    header {
+      text-align: center;
+      margin-top: 40px;
+      color: white;
+    }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-        }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    main {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      padding: 30px;
+      margin-top: 30px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            color: white;
-            position: relative;
-        }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
 
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
+    input[type="date"] {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      width: 100%;
+      margin-bottom: 20px;
+    }
 
-        .logo-icon {
-            font-size: 4rem;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-        }
+    button {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
 
-        .subtitle {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            font-weight: 400;
-            margin-bottom: 20px;
-        }
+    button:hover {
+      opacity: 0.9;
+    }
 
-        .header-decoration {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, #ff9a9e, #fecfef, #fecfef, #ff9a9e);
-            border-radius: 2px;
-            opacity: 0.8;
-        }
+    #results {
+      margin-top: 20px;
+      text-align: left;
+    }
 
-        .ad-banner {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px dashed rgba(255, 255, 255, 0.3);
-            padding: 25px;
-            margin: 25px 0;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-            border-radius: 16px;
-            font-size: 14px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
+    #results p {
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
 
-        .ad-banner:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
+    /* Share card */
+    .share-card {
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      color: white;
+      border-radius: 20px;
+      padding: 30px;
+      margin-top: 30px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      display: none;
+    }
 
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
+    .share-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+    }
 
-        .calculator-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 
-                0 20px 40px rgba(0,0,0,0.1),
-                0 1px 3px rgba(0,0,0,0.05),
-                inset 0 1px 0 rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
+    .share-content p {
+      font-size: 1.2rem;
+      margin: 8px 0;
+      font-weight: 600;
+    }
 
-        .calculator-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 
-                0 25px 50px rgba(0,0,0,0.15),
-                0 1px 3px rgba(0,0,0,0.05),
-                inset 0 1px 0 rgba(255,255,255,0.1);
-        }
+    .share-buttons {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        .calculator-section h2 {
-            color: #2d3748;
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+    .share-buttons a {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
 
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+    #twitterShare { background: #1da1f2; color: white; }
+    #facebookShare { background: #1877f2; color: white; }
+    #whatsappShare { background: #25d366; color: white; }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .share-buttons a:hover {
+      opacity: 0.85;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
+    /* Milestone badges */
+    .milestone-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #2d3748;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+      animation: popIn 0.6s ease;
+    }
 
-        input, select {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-            color: #2d3748;
-            font-weight: 500;
-        }
+    .badge-gold {
+      background: linear-gradient(135deg, #ffd700, #ffb347);
+      color: #2d3748;
+    }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 
-                0 0 0 4px rgba(102, 126, 234, 0.1),
-                0 2px 8px rgba(102, 126, 234, 0.15);
-            background: rgba(255, 255, 255, 0.95);
-            transform: translateY(-1px);
-        }
+    .badge-platinum {
+      background: linear-gradient(135deg, #cfd9df, #e2ebf0);
+      color: #1a202c;
+    }
 
-        .calculate-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 18px 36px;
-            font-size: 18px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-        }
+    .badge-blue {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
 
-        .calculate-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
-        }
+    .badge-red {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: white;
+    }
 
-        .calculate-btn:hover::before {
-            left: 100%;
-        }
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
 
-        .calculate-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 
-                0 15px 35px rgba(102, 126, 234, 0.4),
-                0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .calculate-btn:active {
-            transform: translateY(-1px);
-        }
-
-        .results {
-            margin-top: 30px;
-        }
-
-        .result-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            color: white;
-            padding: 32px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-            box-shadow: 
-                0 10px 30px rgba(102, 126, 234, 0.3),
-                0 1px 3px rgba(0,0,0,0.1);
-            transform: scale(0.95);
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .result-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .result-card.show {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .result-card:hover {
-            transform: scale(1.02) translateY(-2px);
-            box-shadow: 
-                0 20px 40px rgba(102, 126, 234, 0.4),
-                0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .result-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 16px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .result-value {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            letter-spacing: -0.02em;
-        }
-
-        .result-subtitle {
-            opacity: 0.9;
-            font-size: 0.95rem;
-            font-weight: 400;
-        }
-
-        .life-progress {
-            margin-top: 20px;
-        }
-
-        .progress-bar {
-            background: rgba(255,255,255,0.2);
-            border-radius: 12px;
-            height: 24px;
-            overflow: hidden;
-            margin-top: 16px;
-            position: relative;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, #00ff88, #00cc6a, #00ff88);
-            background-size: 200% 100%;
-            height: 100%;
-            border-radius: 12px;
-            transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 13px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            animation: shimmer 2s ease-in-out infinite;
-            position: relative;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .info-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            padding: 40px;
-            margin-top: 50px;
-            box-shadow: 
-                0 20px 40px rgba(0,0,0,0.1),
-                0 1px 3px rgba(0,0,0,0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .info-section h2 {
-            color: #667eea;
-            margin-bottom: 24px;
-            font-size: 1.6rem;
-            font-weight: 600;
-        }
-
-        .info-section p {
-            color: #4a5568;
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .disclaimer {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2rem;
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .logo-icon {
-                font-size: 3rem;
-            }
-            
-            .container {
-                padding: 10px;
-            }
-        }
-    </style>
+    footer {
+      margin: 40px 0;
+      color: white;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-decoration"></div>
-            <h1><span class="logo-icon">📊</span> Life Stats Calculator</h1>
-            <p class="subtitle">Discover your life journey with beautiful, personalized insights</p>
-        </header>
+  <header>
+    <h1>🎂 Life Stats Calculator</h1>
+    <p>Find out how many days you’ve lived and your life milestones!</p>
+  </header>
 
-        <!-- Ad Banner Top -->
-        <div class="ad-banner">
-            <strong>Advertisement Space</strong><br>
-            728x90 Leaderboard Banner - High visibility placement
+  <main>
+    <form id="lifeForm">
+      <label for="dob">Enter your date of birth:</label>
+      <input type="date" id="dob" required />
+      <button type="submit">Calculate</button>
+    </form>
+
+    <div id="results"></div>
+
+    <!-- Share Card Section -->
+    <div class="share-card" id="shareCard">
+      <h3>🎉 Share Your Life Stats</h3>
+      <div class="share-content">
+        <p>📅 Days Lived: <span id="shareDaysLived">0</span></p>
+        <p>🌟 Age: <span id="shareAge">0</span> years</p>
+        <p>🎂 Next Birthday: in <span id="shareNextBirthday">0</span> days</p>
+        <p>⏳ Life Progress: <span id="shareProgress">0%</span></p>
+
+        <!-- Milestone badge -->
+        <div id="milestoneBadge" class="milestone-badge" style="display: none;">
+          <span id="milestoneIcon">🏅</span>
+          <span id="milestoneMessage">Milestone unlocked!</span>
         </div>
+      </div>
 
-        <div class="main-content">
-            <div class="calculator-section">
-                <h2>📊 Calculate Your Life Stats</h2>
-                <form id="birthdayForm">
-                    <div class="form-group">
-                        <label for="birthdate">Your Birth Date:</label>
-                        <input type="date" id="birthdate" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="country">Country/Region:</label>
-                        <select id="country" required>
-                            <option value="">Select your country</option>
-                            <option value="80.7">United States (80.7 years)</option>
-                            <option value="84.4">Japan (84.4 years)</option>
-                            <option value="83.4">Switzerland (83.4 years)</option>
-                            <option value="82.8">Australia (82.8 years)</option>
-                            <option value="82.7">Canada (82.7 years)</option>
-                            <option value="82.3">France (82.3 years)</option>
-                            <option value="82.1">Germany (82.1 years)</option>
-                            <option value="81.9">United Kingdom (81.9 years)</option>
-                            <option value="81.6">Netherlands (81.6 years)</option>
-                            <option value="81.4">Sweden (81.4 years)</option>
-                            <option value="78.9">Brazil (78.9 years)</option>
-                            <option value="77.2">China (77.2 years)</option>
-                            <option value="76.9">Russia (76.9 years)</option>
-                            <option value="69.7">India (69.7 years)</option>
-                            <option value="75">Other/Global Average (75 years)</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="calculate-btn">✨ Calculate My Life Stats</button>
-                </form>
-
-                <div class="results" id="results" style="display: none;">
-                    <div class="result-card" id="nextBirthday">
-                        <h3>🎈 Next Birthday</h3>
-                        <div class="result-value" id="daysUntilBirthday">0</div>
-                        <div class="result-subtitle">days to go!</div>
-                    </div>
-
-                    <div class="result-card" id="daysLived">
-                        <h3>📅 Days You've Lived</h3>
-                        <div class="result-value" id="totalDaysLived">0</div>
-                        <div class="result-subtitle">days of amazing experiences</div>
-                    </div>
-
-                    <div class="result-card" id="ageCard">
-                        <h3>🌟 Your Current Age</h3>
-                        <div class="result-value" id="currentAge">0</div>
-                        <div class="result-subtitle">years young</div>
-                    </div>
-
-                    <div class="result-card" id="estimatedDaysLeft">
-                        <h3>⏰ Estimated Days Remaining</h3>
-                        <div class="result-value" id="daysRemaining">0</div>
-                        <div class="result-subtitle">days to make count</div>
-                    </div>
-
-                    <div class="result-card life-progress">
-                        <h3>📈 Life Progress</h3>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="lifeProgressBar">0%</div>
-                        </div>
-                        <div class="result-subtitle" style="margin-top: 10px;" id="progressText">
-                            Keep making every day count!
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar">
-                <!-- Ad Space Sidebar Top -->
-                <div class="ad-banner">
-                    <strong>Advertisement</strong><br>
-                    300x250 Medium Rectangle<br>
-                    Perfect for targeted ads
-                </div>
-
-                <!-- Ad Space Sidebar Middle -->
-                <div class="ad-banner">
-                    <strong>Advertisement</strong><br>
-                    300x600 Half Page<br>
-                    Premium placement
-                </div>
-            </div>
-        </div>
-
-        <!-- Ad Banner Bottom -->
-        <div class="ad-banner">
-            <strong>Advertisement Space</strong><br>
-            728x90 Leaderboard Banner - Bottom placement for high engagement
-        </div>
-
-        <div class="info-section">
-            <h2>🌍 About Life Expectancy Data</h2>
-            <p>Our calculator uses the latest available life expectancy data from the World Health Organization and national statistics offices. Life expectancy varies significantly by country due to factors like healthcare quality, lifestyle, and socioeconomic conditions.</p>
-            
-            <h2>💡 Make Every Day Count</h2>
-            <p>While these calculations provide interesting insights into your life timeline, remember that life expectancy is just an average. Focus on living a healthy, fulfilling life regardless of the numbers. Every day is a gift - that's why they call it the present!</p>
-
-            <div class="disclaimer">
-                <strong>Disclaimer:</strong> These calculations are for entertainment and educational purposes only. Life expectancy data is based on statistical averages and cannot predict individual lifespan. Many factors including genetics, lifestyle, healthcare access, and unforeseen circumstances affect actual lifespan.
-            </div>
-        </div>
+      <div class="share-buttons">
+        <a id="twitterShare" target="_blank">🐦 Share on Twitter/X</a>
+        <a id="facebookShare" target="_blank">📘 Share on Facebook</a>
+        <a id="whatsappShare" target="_blank">💬 Share on WhatsApp</a>
+      </div>
     </div>
+  </main>
 
-    <script>
-        // Wait for DOM to load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set max date to today
-            const today = new Date();
-            document.getElementById('birthdate').max = today.toISOString().split('T')[0];
-            
-            // Add form submit listener
-            document.getElementById('birthdayForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                console.log('Form submitted!'); // Debug log
-                calculateStats();
-            });
-            
-            // Also add click listener to button as backup
-            document.querySelector('.calculate-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('Button clicked!'); // Debug log
-                calculateStats();
-            });
-        });
+  <footer>
+    <p>✨ Made for fun — share your stats and celebrate milestones!</p>
+  </footer>
 
-        function calculateStats() {
-            console.log('calculateStats function called'); // Debug log
-            
-            // Get form values
-            const birthdateValue = document.getElementById('birthdate').value;
-            const countryValue = document.getElementById('country').value;
-            
-            console.log('Birthdate input:', birthdateValue); // Debug log
-            console.log('Country input:', countryValue); // Debug log
+  <script>
+    document.getElementById("lifeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const dobInput = document.getElementById("dob").value;
+      if (!dobInput) return;
 
-            // Validate inputs
-            if (!birthdateValue) {
-                alert('Please select your birth date!');
-                return;
-            }
+      const dob = new Date(dobInput);
+      const today = new Date();
 
-            if (!countryValue) {
-                alert('Please select your country!');
-                return;
-            }
+      // Age in days
+      const diffTime = today - dob;
+      const ageInDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-            // Parse values
-            const birthdate = new Date(birthdateValue + 'T00:00:00');
-            const lifeExpectancy = parseFloat(countryValue);
-            const today = new Date();
-            
-            console.log('Parsed birthdate:', birthdate); // Debug log
-            console.log('Life expectancy:', lifeExpectancy); // Debug log
+      // Age in years
+      let ageInYears = today.getFullYear() - dob.getFullYear();
+      const hasHadBirthday =
+        today.getMonth() > dob.getMonth() ||
+        (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+      if (!hasHadBirthday) ageInYears--;
 
-            // Validate birthdate
-            if (isNaN(birthdate.getTime())) {
-                alert('Invalid birth date!');
-                return;
-            }
+      // Next birthday
+      let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+      if (today > nextBirthday) {
+        nextBirthday.setFullYear(today.getFullYear() + 1);
+      }
+      const daysUntilBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
 
-            if (birthdate > today) {
-                alert('Birth date cannot be in the future!');
-                return;
-            }
+      // Life progress (assuming 80 years avg)
+      const lifeExpectancy = 80 * 365;
+      const lifeProgress = (ageInDays / lifeExpectancy) * 100;
 
-            // Calculate age
-            const ageInMs = today.getTime() - birthdate.getTime();
-            const ageInDays = Math.floor(ageInMs / (1000 * 60 * 60 * 24));
-            const ageInYears = Math.floor(ageInDays / 365.25);
+      // Update results section
+      document.getElementById("results").innerHTML = `
+        <p>📅 You have lived <strong>${ageInDays.toLocaleString()}</strong> days.</p>
+        <p>🌟 You are <strong>${ageInYears}</strong> years old.</p>
+        <p>🎂 Your next birthday is in <strong>${daysUntilBirthday}</strong> days.</p>
+        <p>⏳ Estimated life progress: <strong>${lifeProgress.toFixed(1)}%</strong></p>
+      `;
 
-            // Calculate next birthday
-            const currentYear = today.getFullYear();
-            const birthMonth = birthdate.getMonth();
-            const birthDay = birthdate.getDate();
-            
-            let nextBirthday = new Date(currentYear, birthMonth, birthDay);
-            
-            // If birthday already passed this year, use next year
-            if (nextBirthday <= today) {
-                nextBirthday = new Date(currentYear + 1, birthMonth, birthDay);
-            }
-            
-            const msUntilBirthday = nextBirthday.getTime() - today.getTime();
-            const daysUntilBirthday = Math.ceil(msUntilBirthday / (1000 * 60 * 60 * 24));
+      // Update share card values
+      document.getElementById('shareDaysLived').textContent = ageInDays.toLocaleString();
+      document.getElementById('shareAge').textContent = ageInYears;
+      document.getElementById('shareNextBirthday').textContent = daysUntilBirthday;
+      document.getElementById('shareProgress').textContent = lifeProgress.toFixed(1) + "%";
 
-            // Calculate remaining days
-            const totalExpectedDays = Math.floor(lifeExpectancy * 365.25);
-            const daysRemaining = Math.max(0, totalExpectedDays - ageInDays);
+      // Build share messages
+      const shareText = encodeURIComponent(
+        `🎉 I've lived ${ageInDays.toLocaleString()} days (${ageInYears} years)! ` +
+        `Next birthday in ${daysUntilBirthday} days. Life progress: ${lifeProgress.toFixed(1)}% ⏳\n\n` +
+        `✨ Calculate yours: YOURSITE.com`
+      );
 
-            // Calculate progress
-            const lifeProgress = Math.min(100, (ageInDays / totalExpectedDays) * 100);
+      document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${shareText}`;
+      document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=YOURSITE.com&quote=${shareText}`;
+      document.getElementById('whatsappShare').href = `https://wa.me/?text=${shareText}`;
 
-            console.log('Calculations complete:', {
-                ageInDays,
-                ageInYears,
-                daysUntilBirthday,
-                daysRemaining,
-                lifeProgress
-            }); // Debug log
+      // Milestone gamification
+      let milestoneMsg = "";
+      let milestoneIcon = "🏅";
+      let badgeClass = "";
 
-            // Update the display
-            updateDisplay({
-                daysUntilBirthday,
-                ageInDays,
-                ageInYears,
-                daysRemaining,
-                lifeProgress
-            });
-        }
+      if (ageInDays >= 20000) {
+        milestoneMsg = "Legend! You've crossed 20k days!";
+        milestoneIcon = "🏆";
+        badgeClass = "badge-platinum";
+      } else if (ageInDays >= 10000) {
+        milestoneMsg = "Welcome to the 10k Days Club!";
+        milestoneIcon = "🥇";
+        badgeClass = "badge-gold";
+      }
 
-        function updateDisplay(data) {
-            console.log('Updating display with:', data); // Debug log
-            
-            try {
-                // Update text content
-                document.getElementById('daysUntilBirthday').textContent = data.daysUntilBirthday;
-                document.getElementById('totalDaysLived').textContent = data.ageInDays.toLocaleString();
-                document.getElementById('currentAge').textContent = data.ageInYears;
-                document.getElementById('daysRemaining').textContent = data.daysRemaining.toLocaleString();
+      if (lifeProgress >= 50 && lifeProgress < 51) {
+        milestoneMsg = "Halfway Milestone! Keep going strong!";
+        milestoneIcon = "⏳";
+        badgeClass = "badge-blue";
+      }
 
-                // Update progress bar
-                const progressBar = document.getElementById('lifeProgressBar');
-                const progressPercent = data.lifeProgress.toFixed(1);
-                progressBar.style.width = progressPercent + '%';
-                progressBar.textContent = progressPercent + '%';
+      if (lifeProgress >= 90) {
+        milestoneMsg = "Final stretch! Make every moment count!";
+        milestoneIcon = "🔥";
+        badgeClass = "badge-red";
+      }
 
-                document.getElementById('progressText').textContent = 
-                    `You've lived ${progressPercent}% of expected lifespan`;
+      const badge = document.getElementById('milestoneBadge');
+      if (milestoneMsg) {
+        document.getElementById('milestoneMessage').textContent = milestoneMsg;
+        document.getElementById('milestoneIcon').textContent = milestoneIcon;
+        badge.className = "milestone-badge " + badgeClass;
+        badge.style.display = 'inline-flex';
+      } else {
+        badge.style.display = 'none';
+      }
 
-                // Show results section
-                const resultsDiv = document.getElementById('results');
-                resultsDiv.style.display = 'block';
-
-                // Reset animation classes
-                const cards = document.querySelectorAll('.result-card');
-                cards.forEach(card => card.classList.remove('show'));
-
-                // Animate cards
-                setTimeout(() => {
-                    cards.forEach((card, index) => {
-                        setTimeout(() => {
-                            card.classList.add('show');
-                        }, index * 300);
-                    });
-                }, 200);
-
-                // Scroll to results
-                setTimeout(() => {
-                    resultsDiv.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }, 800);
-
-                console.log('Display updated successfully'); // Debug log
-
-            } catch (error) {
-                console.error('Error updating display:', error);
-                alert('There was an error displaying your results. Please try again.');
-            }
-        }
-    </script>
+      // Show share card
+      document.getElementById('shareCard').style.display = 'block';
+    });
+  </script>
 </body>
 </html>
