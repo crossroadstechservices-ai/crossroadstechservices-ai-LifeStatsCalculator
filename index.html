@@ -790,4 +790,124 @@
 
     document.getElementById("lifeForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const dobInput
+      const dobInput = document.getElementById("dob").value;
+      if (!dobInput) return;
+
+      const dob = new Date(dobInput);
+      const today = new Date();
+
+      // Age in days
+      const diffTime = today - dob;
+      const ageInDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      // Age in years
+      let ageInYears = today.getFullYear() - dob.getFullYear();
+      const hasHadBirthday =
+        today.getMonth() > dob.getMonth() ||
+        (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+      if (!hasHadBirthday) ageInYears--;
+
+      // Next birthday
+      let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+      if (today > nextBirthday) {
+        nextBirthday.setFullYear(today.getFullYear() + 1);
+      }
+      const daysUntilBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+
+      // Life progress (assuming 80 years avg)
+      const lifeExpectancy = 80 * 365;
+      const lifeProgress = (ageInDays / lifeExpectancy) * 100;
+
+      // Update results section with animated numbers
+      document.getElementById("results").innerHTML = `
+        <p>📅 You have lived <strong><span class="counting-number" id="daysLivedCount">0</span></strong> days.</p>
+        <p>🌟 You are <strong><span class="counting-number" id="ageCount">0</span></strong> years old.</p>
+        <p>🎂 Your next birthday is in <strong><span class="counting-number" id="birthdayCount">0</span></strong> days.</p>
+        <p>⏳ Estimated life progress: <strong><span class="counting-number" id="progressCount">0</span>%</strong></p>
+      `;
+
+      // Animate the numbers
+      setTimeout(() => {
+        animateNumber(document.getElementById('daysLivedCount'), 0, ageInDays, 1500);
+        animateNumber(document.getElementById('ageCount'), 0, ageInYears, 1000);
+        animateNumber(document.getElementById('birthdayCount'), 0, daysUntilBirthday, 800);
+        animateNumber(document.getElementById('progressCount'), 0, Math.floor(lifeProgress * 10) / 10, 1200);
+      }, 100);
+
+      // Get and show achievements
+      const achievements = getAchievements(ageInDays, ageInYears, lifeProgress);
+      setTimeout(() => showAchievements(achievements), 1000);
+
+      // Get and show fun comparisons
+      const comparisons = getFunComparisons(ageInDays, ageInYears);
+      setTimeout(() => showComparisons(comparisons), 1500);
+
+      // Update share card values
+      document.getElementById('shareDaysLived').textContent = ageInDays.toLocaleString();
+      document.getElementById('shareAge').textContent = ageInYears;
+      document.getElementById('shareNextBirthday').textContent = daysUntilBirthday;
+      document.getElementById('shareProgress').textContent = lifeProgress.toFixed(1) + "%";
+
+      // Build share messages - Update with your actual domain
+      const siteUrl = window.location.href; // Uses current URL
+      const shareText = encodeURIComponent(
+        `🎉 I've lived ${ageInDays.toLocaleString()} days (${ageInYears} years)! ` +
+        `Next birthday in ${daysUntilBirthday} days. Life progress: ${lifeProgress.toFixed(1)}% ⏳\n\n` +
+        `✨ Calculate yours: ${siteUrl}`
+      );
+
+      document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${shareText}`;
+      document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}&quote=${shareText}`;
+      document.getElementById('whatsappShare').href = `https://wa.me/?text=${shareText}`;
+
+      // Handle milestone from original code
+      let milestoneMsg = "";
+      let milestoneIcon = "🏅";
+      let badgeClass = "";
+
+      if (ageInDays >= 20000) {
+        milestoneMsg = "Legend! You've crossed 20k days!";
+        milestoneIcon = "🏆";
+        badgeClass = "badge-platinum";
+      } else if (ageInDays >= 10000) {
+        milestoneMsg = "Welcome to the 10k Days Club!";
+        milestoneIcon = "🥇";
+        badgeClass = "badge-gold";
+      }
+
+      if (lifeProgress >= 50 && lifeProgress < 51) {
+        milestoneMsg = "Halfway Milestone! Keep going strong!";
+        milestoneIcon = "⏳";
+        badgeClass = "badge-blue";
+      }
+
+      if (lifeProgress >= 90) {
+        milestoneMsg = "Final stretch! Make every moment count!";
+        milestoneIcon = "🔥";
+        badgeClass = "badge-red";
+      }
+
+      const badge = document.getElementById('milestoneBadge');
+      if (milestoneMsg) {
+        document.getElementById('milestoneMessage').textContent = milestoneMsg;
+        document.getElementById('milestoneIcon').textContent = milestoneIcon;
+        badge.className = "milestone-badge " + badgeClass;
+        badge.style.display = 'inline-flex';
+      } else {
+        badge.style.display = 'none';
+      }
+
+      // Show share card
+      setTimeout(() => {
+        document.getElementById('shareCard').style.display = 'block';
+        
+        // Scroll to results
+        document.getElementById('results').scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
