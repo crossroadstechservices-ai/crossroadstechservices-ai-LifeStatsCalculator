@@ -908,6 +908,63 @@
         });
       }, 2000);
     });
+
+    // Copy stats to clipboard function
+    function copyStatsToClipboard() {
+      const daysLived = document.getElementById('shareDaysLived').textContent;
+      const age = document.getElementById('shareAge').textContent;
+      const nextBirthday = document.getElementById('shareNextBirthday').textContent;
+      const progress = document.getElementById('shareProgress').textContent;
+      const siteUrl = window.location.href;
+      
+      const statsText = `🎉 I've lived ${daysLived} days (${age} years)! Next birthday in ${nextBirthday} days. Life progress: ${progress} ⏳
+
+✨ Calculate yours: ${siteUrl}`;
+
+      // Try to copy to clipboard
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(statsText).then(() => {
+          showCopySuccess();
+        }).catch(() => {
+          fallbackCopy(statsText);
+        });
+      } else {
+        fallbackCopy(statsText);
+      }
+    }
+
+    // Fallback copy method for older browsers
+    function fallbackCopy(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        showCopySuccess();
+      } catch (err) {
+        alert('Unable to copy. Please manually copy the text.');
+      }
+      
+      document.body.removeChild(textArea);
+    }
+
+    // Show copy success animation
+    function showCopySuccess() {
+      const copyBtn = document.querySelector('.copy-stats-btn');
+      const originalText = copyBtn.innerHTML;
+      
+      copyBtn.innerHTML = '<span>✅</span> Copied!';
+      copyBtn.classList.add('copied');
+      
+      setTimeout(() => {
+        copyBtn.innerHTML = originalText;
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    }
   </script>
 </body>
 </html>
