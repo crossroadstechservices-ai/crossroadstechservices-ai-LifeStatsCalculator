@@ -1,698 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Life Stats Calculator - Days Lived, Life Expectancy & Birthday Countdown</title>
-  <meta name="description" content="Calculate your life statistics - discover days lived, age milestones, and birthday countdown with shareable results.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Stats Calculator</title>
+  <meta name="description" content="Discover your days lived, life expectancy, birthday countdown and personalized life insights.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://YOURUSERNAME.github.io/YOURREPO/">
+  <meta property="og:title" content="Life Stats Calculator - Days Lived, Birthday Countdown & More">
+  <meta property="og:description" content="Discover your days lived, life expectancy, birthday countdown and personalized life insights.">
+  <meta property="og:image" content="https://YOURUSERNAME.github.io/YOURREPO/preview.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://YOURUSERNAME.github.io/YOURREPO/">
+  <meta name="twitter:title" content="Life Stats Calculator - Days Lived, Birthday Countdown & More">
+  <meta name="twitter:description" content="Fun life stats: days lived, birthday countdown, life expectancy progress bar & more.">
+  <meta name="twitter:image" content="https://YOURUSERNAME.github.io/YOURREPO/preview.png">
+
   <style>
-    :root {
-      --primary-gradient: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --text-primary: #2d3748;
-      --text-secondary: #4a5568;
-      --border-color: #e2e8f0;
-      --shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
-
-    [data-theme="dark"] {
-      --primary-gradient: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-      --card-bg: rgba(30, 30, 30, 0.95);
-      --text-primary: #ffffff;
-      --text-secondary: #cbd5e0;
-      --border-color: #4a5568;
-      --shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--primary-gradient);
-      color: var(--text-primary);
+      font-family: system-ui, sans-serif;
       margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      transition: all 0.3s ease;
-    }
-
-    /* Dark mode toggle */
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 50px;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: var(--shadow);
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-
-    /* Ad Banner Styles */
-    .ad-banner {
-      background: var(--card-bg);
-      border: 2px dashed var(--border-color);
       padding: 20px;
-      margin: 20px 0;
-      text-align: center;
-      color: var(--text-secondary);
-      border-radius: 12px;
-      font-size: 14px;
-      width: 100%;
-      max-width: 728px;
-      box-shadow: var(--shadow);
-      transition: all 0.3s ease;
-    }
-
-    .ad-banner-sidebar {
-      background: var(--card-bg);
-      border: 2px dashed var(--border-color);
-      padding: 15px;
-      margin: 15px 0;
-      text-align: center;
-      color: var(--text-secondary);
-      border-radius: 12px;
-      font-size: 12px;
-      width: 100%;
-      max-width: 300px;
-      box-shadow: var(--shadow);
-      transition: all 0.3s ease;
-    }
-
-    /* Container for main content and sidebar */
-    .content-wrapper {
-      display: flex;
-      gap: 30px;
-      max-width: 1200px;
-      width: 100%;
-      align-items: flex-start;
-      padding: 0 20px;
-      justify-content: center;
-    }
-
-    .main-content {
-      flex: 1;
+      background: linear-gradient(to right, #f9fafb, #eef2ff);
+      color: #111;
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: 600px;
     }
-
-    .sidebar {
-      width: 300px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      flex-shrink: 0;
-    }
-
-    header {
-      text-align: center;
-      margin-top: 60px;
-      color: white;
-      width: 100%;
-      max-width: 1200px;
-      padding: 0 20px;
-    }
-
-    header h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .logo-icon {
-      font-size: 3rem;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-    }
-
-    main {
-      background: var(--card-bg);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      padding: 30px;
-      margin-top: 30px;
+    .card {
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 2rem;
       max-width: 500px;
       width: 100%;
-      text-align: center;
-      transition: all 0.3s ease;
+      margin-bottom: 20px;
     }
-
+    h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
     label {
       font-weight: 600;
       display: block;
-      margin-bottom: 8px;
-      color: var(--text-primary);
+      margin: 10px 0 5px;
     }
-
-    input[type="date"] {
-      padding: 12px;
-      border-radius: 10px;
-      border: 2px solid var(--border-color);
-      width: 100%;
-      margin-bottom: 20px;
-      font-size: 16px;
-      transition: border-color 0.3s ease;
-      background: var(--card-bg);
-      color: var(--text-primary);
-    }
-
-    input[type="date"]:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    button {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 14px 24px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      width: 100%;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-    }
-
-    #results {
-      margin-top: 20px;
-      text-align: left;
-      width: 100%;
-    }
-
-    #results p {
-      font-size: 1.1rem;
-      margin: 12px 0;
-      padding: 12px 16px;
-      background: rgba(102, 126, 234, 0.1);
-      border-radius: 10px;
-      border-left: 4px solid #667eea;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--text-primary);
-    }
-
-    /* Achievement badges */
-    .achievements-container {
-      margin: 20px 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    .achievement-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      animation: slideInBounce 0.6s ease;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .achievement-badge:hover {
-      transform: scale(1.05);
-    }
-
-    .badge-legendary { background: linear-gradient(135deg, #ffd700, #ffed4e); color: #2d3748; }
-    .badge-epic { background: linear-gradient(135deg, #9c27b0, #e91e63); color: white; }
-    .badge-rare { background: linear-gradient(135deg, #2196f3, #21cbf3); color: white; }
-    .badge-common { background: linear-gradient(135deg, #4caf50, #8bc34a); color: white; }
-    .badge-special { background: linear-gradient(135deg, #ff9800, #ff5722); color: white; }
-
-    @keyframes slideInBounce {
-      0% { transform: translateY(-20px) scale(0.8); opacity: 0; }
-      50% { transform: translateY(5px) scale(1.1); }
-      100% { transform: translateY(0) scale(1); opacity: 1; }
-    }
-
-    /* Fun comparisons */
-    .comparisons-section {
-      margin-top: 20px;
-      padding: 20px;
-      background: rgba(102, 126, 234, 0.05);
-      border-radius: 15px;
-      border: 1px solid rgba(102, 126, 234, 0.2);
-    }
-
-    .comparison-item {
-      margin: 10px 0;
+    input, select, button {
       padding: 10px;
-      background: var(--card-bg);
-      border-radius: 8px;
-      border-left: 3px solid #667eea;
-      font-size: 0.95rem;
-      animation: fadeInUp 0.5s ease;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Bottom ads alignment */
-    .bottom-ads-container {
+      border: 1px solid #ddd;
+      border-radius: 0.75rem;
       width: 100%;
-      max-width: 1200px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+    button {
+      background: #6366f1;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+    }
+    button:hover {
+      background: #4f46e5;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .progress-bar {
+      background: #e5e7eb;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin: 10px 0;
+      height: 20px;
+    }
+    .progress {
+      background: #6366f1;
+      height: 100%;
+      width: 0%;
+      transition: width 1s ease;
+    }
+    .milestone {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 0.75rem;
+      font-weight: bold;
+      text-align: center;
+      background: #fef3c7;
+      color: #92400e;
+      display: none;
+    }
+    .share-buttons {
       display: flex;
       justify-content: center;
-      padding: 0 20px;
+      gap: 10px;
+      margin-top: 15px;
     }
-
-    .bottom-ads-container .ad-banner {
-      margin: 20px 0;
-    }
-
-    footer {
-      margin: 40px 0;
-      color: white;
+    .share-buttons button {
+      flex: 1;
+      padding: 10px;
       font-size: 0.9rem;
-      text-align: center;
-      width: 100%;
-      max-width: 1200px;
-      padding: 0 20px;
+      background: #10b981;
     }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      .content-wrapper {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .sidebar {
-        width: 100%;
-        max-width: 500px;
-      }
-
-      header h1 {
-        font-size: 2.2rem;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .logo-icon {
-        font-size: 2.5rem;
-      }
-
-      .ad-banner {
-        max-width: 100%;
-      }
-
-      .theme-toggle {
-        top: 10px;
-        right: 10px;
-        padding: 6px 12px;
-        font-size: 1rem;
-      }
-
-      .achievements-container {
-        gap: 8px;
-      }
-
-      .achievement-badge {
-        font-size: 0.8rem;
-        padding: 6px 12px;
-      }
+    .share-buttons button:hover {
+      background: #059669;
     }
   </style>
 </head>
 <body>
-  <!-- Dark Mode Toggle -->
-  <div class="theme-toggle" onclick="toggleTheme()">
-    <span id="themeIcon">🌙</span>
-    <span id="themeText">Dark</span>
-  </div>
 
-  <header>
-    <h1><span class="logo-icon">📊</span> Life Stats Calculator</h1>
-    <p>Find out how many days you've lived and your life milestones!</p>
-  </header>
+  <div class="card">
+    <h1>📅 Life Stats Calculator</h1>
+    <label for="dob">Enter your birthdate:</label>
+    <input type="date" id="dob">
 
-  <!-- Top Ad Banner -->
-  <div class="ad-banner">
-    <strong>Advertisement Space</strong><br>
-    728x90 Leaderboard Banner - High visibility placement for maximum ad revenue
-  </div>
+    <label for="country">Select your country:</label>
+    <select id="country">
+      <option value="US" selected>United States</option>
+      <option value="UK">United Kingdom</option>
+      <option value="IN">India</option>
+      <option value="JP">Japan</option>
+      <option value="BR">Brazil</option>
+    </select>
 
-  <div class="content-wrapper">
-    <div class="main-content">
-      <main>
-        <form id="lifeForm">
-          <label for="dob">Enter your date of birth:</label>
-          <input type="date" id="dob" required />
-          <button type="submit">✨ Calculate My Life Stats</button>
-        </form>
+    <button onclick="calculateLife()">Calculate</button>
 
-        <div id="results"></div>
+    <div class="results" id="results" style="display:none;">
+      <p><strong>Days Lived:</strong> <span id="daysLived"></span></p>
+      <p><strong>Age:</strong> <span id="age"></span> years</p>
+      <p><strong>Next Birthday:</strong> in <span id="daysToBirthday"></span> days</p>
+      <p><strong>Life Progress:</strong> <span id="lifeProgress"></span>%</p>
+      <div class="progress-bar"><div class="progress" id="progressFill"></div></div>
+      <div class="milestone" id="milestoneMessage"></div>
 
-        <!-- Achievements Section -->
-        <div id="achievementsContainer" class="achievements-container" style="display: none;"></div>
-
-        <!-- Fun Comparisons Section -->
-        <div id="comparisons" class="comparisons-section" style="display: none;">
-          <h3 style="margin-bottom: 15px; color: var(--text-primary);">🎯 Fun Comparisons</h3>
-          <div id="comparisonsList"></div>
-        </div>
-      </main>
-
-      <!-- In-content Ad Banner -->
-      <div class="ad-banner" style="margin-top: 30px; max-width: 500px;">
-        <strong>Advertisement Space</strong><br>
-        728x90 Banner - Perfect placement after results for high engagement
-      </div>
-    </div>
-
-    <div class="sidebar">
-      <!-- Sidebar Ad 1 -->
-      <div class="ad-banner-sidebar">
-        <strong>Advertisement</strong><br>
-        300x250 Medium Rectangle<br>
-        Premium sidebar placement
-      </div>
-
-      <!-- Sidebar Ad 2 -->
-      <div class="ad-banner-sidebar">
-        <strong>Advertisement</strong><br>
-        300x600 Half Page<br>
-        High-value vertical ad space
-      </div>
-
-      <!-- Sidebar Ad 3 -->
-      <div class="ad-banner-sidebar">
-        <strong>Advertisement</strong><br>
-        300x250 Medium Rectangle<br>
-        Additional revenue opportunity
+      <div class="share-buttons">
+        <button onclick="shareOnTwitter()">Share on Twitter</button>
+        <button onclick="shareOnFacebook()">Facebook</button>
+        <button onclick="shareOnWhatsApp()">WhatsApp</button>
       </div>
     </div>
   </div>
-
-  <!-- Bottom Ad Banners Container -->
-  <div class="bottom-ads-container">
-    <div class="ad-banner">
-      <strong>Advertisement Space</strong><br>
-      728x90 Bottom Banner - Excellent placement for retargeting and engagement
-    </div>
-  </div>
-
-  <footer>
-    <p>✨ Made for fun — share your stats and celebrate milestones!</p>
-    <p>Life Stats Calculator - Your journey in numbers</p>
-  </footer>
 
   <script>
-    // Dark mode functionality
-    function toggleTheme() {
-      const body = document.body;
-      const themeIcon = document.getElementById('themeIcon');
-      const themeText = document.getElementById('themeText');
-      
-      if (body.getAttribute('data-theme') === 'dark') {
-        body.removeAttribute('data-theme');
-        themeIcon.textContent = '🌙';
-        themeText.textContent = 'Dark';
-        localStorage.setItem('theme', 'light');
-      } else {
-        body.setAttribute('data-theme', 'dark');
-        themeIcon.textContent = '☀️';
-        themeText.textContent = 'Light';
-        localStorage.setItem('theme', 'dark');
+    function calculateLife() {
+      const dobInput = document.getElementById("dob").value;
+      const country = document.getElementById("country").value;
+      if (!dobInput) return alert("Please enter your birthdate");
+
+      const dob = new Date(dobInput);
+      const today = new Date();
+      const diffTime = today - dob;
+      const daysLived = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      const ageYears = today.getFullYear() - dob.getFullYear() -
+        (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate()) ? 1 : 0);
+
+      const nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+      const daysToBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+
+      // Life expectancy (simplified sample by country)
+      const expectancy = { US: 79, UK: 81, IN: 70, JP: 84, BR: 75 };
+      const expYears = expectancy[country] || 78;
+      const lifeProgress = Math.min(((ageYears / expYears) * 100).toFixed(1), 100);
+
+      // Update UI
+      document.getElementById("results").style.display = "block";
+      document.getElementById("daysLived").textContent = daysLived.toLocaleString();
+      document.getElementById("age").textContent = ageYears;
+      document.getElementById("daysToBirthday").textContent = daysToBirthday;
+      document.getElementById("lifeProgress").textContent = lifeProgress;
+      document.getElementById("progressFill").style.width = lifeProgress + "%";
+
+      // Milestones
+      let milestoneMsg = "";
+      if (daysLived >= 20000) {
+        milestoneMsg = "🏆 Legend! You've crossed 20k days!";
+      } else if (daysLived >= 10000) {
+        milestoneMsg = "🥇 Welcome to the 10k Days Club!";
       }
+      if (lifeProgress >= 50 && lifeProgress < 51) {
+        milestoneMsg = "⏳ Halfway Milestone! Keep going strong!";
+      }
+      if (lifeProgress >= 90) {
+        milestoneMsg = "🔥 Final stretch! Make every moment count!";
+      }
+      const milestoneEl = document.getElementById("milestoneMessage");
+      milestoneEl.textContent = milestoneMsg;
+      milestoneEl.style.display = milestoneMsg ? "block" : "none";
+
+      // Store for sharing
+      window.latestStats = {
+        daysLived,
+        milestone: milestoneMsg
+      };
     }
 
-    // Load saved theme
-    document.addEventListener('DOMContentLoaded', function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        document.body.setAttribute('data-theme', 'dark');
-        document.getElementById('themeIcon').textContent = '☀️';
-        document.getElementById('themeText').textContent = 'Light';
-      }
-      
-      document.getElementById('dob').max = new Date().toISOString().split('T')[0];
-    });
-
-    // Achievement system
-    function getAchievements(ageInDays, ageInYears, lifeProgress) {
-      const achievements = [];
-      
-      // Days-based achievements
-      if (ageInDays >= 25000) achievements.push({ icon: '👑', text: 'Quarter Century Master', class: 'badge-legendary' });
-      else if (ageInDays >= 20000) achievements.push({ icon: '🏆', text: '20K Days Legend', class: 'badge-epic' });
-      else if (ageInDays >= 15000) achievements.push({ icon: '💎', text: '15K Days Diamond', class: 'badge-rare' });
-      else if (ageInDays >= 10000) achievements.push({ icon: '🥇', text: '10K Days Club', class: 'badge-rare' });
-      else if (ageInDays >= 5000) achievements.push({ icon: '🌟', text: '5K Days Star', class: 'badge-common' });
-      else if (ageInDays >= 1000) achievements.push({ icon: '🎯', text: 'Millennium Member', class: 'badge-common' });
-
-      // Special number achievements
-      if (ageInDays === 7777) achievements.push({ icon: '🍀', text: 'Lucky 7777!', class: 'badge-special' });
-      if (ageInDays === 3141) achievements.push({ icon: '🥧', text: 'Pi Day Survivor', class: 'badge-special' });
-      if (ageInDays === 1337) achievements.push({ icon: '💻', text: 'Elite Hacker', class: 'badge-special' });
-
-      // Age-based achievements
-      if (ageInYears >= 100) achievements.push({ icon: '🎂', text: 'Centenarian', class: 'badge-legendary' });
-      else if (ageInYears >= 80) achievements.push({ icon: '🎭', text: 'Wisdom Master', class: 'badge-epic' });
-      else if (ageInYears >= 65) achievements.push({ icon: '📚', text: 'Elder Sage', class: 'badge-rare' });
-      else if (ageInYears >= 50) achievements.push({ icon: '🌅', text: 'Half Century', class: 'badge-rare' });
-      else if (ageInYears >= 30) achievements.push({ icon: '🚀', text: 'Prime Time', class: 'badge-common' });
-      else if (ageInYears >= 21) achievements.push({ icon: '🎓', text: 'Adult Mode', class: 'badge-common' });
-      else if (ageInYears >= 18) achievements.push({ icon: '🗳️', text: 'Voter Ready', class: 'badge-common' });
-      else if (ageInYears >= 13) achievements.push({ icon: '📱', text: 'Teen Spirit', class: 'badge-common' });
-
-      // Life progress achievements
-      if (lifeProgress >= 90) achievements.push({ icon: '🔥', text: 'Final Sprint', class: 'badge-red' });
-      else if (lifeProgress >= 75) achievements.push({ icon: '📈', text: 'Three Quarters', class: 'badge-epic' });
-      else if (lifeProgress >= 50) achievements.push({ icon: '⏳', text: 'Halfway Hero', class: 'badge-blue' });
-      else if (lifeProgress >= 25) achievements.push({ icon: '🌱', text: 'Quarter Life', class: 'badge-common' });
-
-      return achievements;
+    function shareOnTwitter() {
+      if (!window.latestStats) return alert("Calculate first!");
+      const text = `I've lived ${window.latestStats.daysLived.toLocaleString()} days! ${window.latestStats.milestone || ""} 🎉 Calculate yours 👉`;
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`, "_blank");
     }
 
-    // Fun comparisons generator
-    function getFunComparisons(ageInDays, ageInYears) {
-      const comparisons = [];
-      
-      const breathsCount = (ageInDays * 20000).toLocaleString();
-      const heartbeats = (ageInDays * 100000).toLocaleString();
-      const sleepHours = Math.floor(ageInDays * 8).toLocaleString();
-      const movieLength = Math.floor(ageInDays * 24 / 2);
-      
-      comparisons.push(`💨 You've taken approximately ${breathsCount} breaths!`);
-      comparisons.push(`❤️ Your heart has beaten about ${heartbeats} times!`);
-      comparisons.push(`😴 You've slept for roughly ${sleepHours} hours total`);
-      comparisons.push(`🎬 That's enough time to watch ${movieLength.toLocaleString()} movies!`);
-      
-      if (ageInYears >= 20) {
-        comparisons.push(`🌍 You've experienced ${Math.floor(ageInYears / 4)} leap years`);
-      }
-      
-      if (ageInDays > 365) {
-        const earthOrbits = (ageInDays / 365).toFixed(1);
-        comparisons.push(`🪐 Earth has orbited the sun ${earthOrbits} times during your life`);
-      }
-      
-      if (ageInDays > 1000) {
-        comparisons.push(`🎯 You've surpassed the average lifespan of ${Math.floor(ageInDays / 365)} dogs`);
-      }
-      
-      return comparisons;
+    function shareOnFacebook() {
+      if (!window.latestStats) return alert("Calculate first!");
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
     }
 
-    // Display achievements
-    function showAchievements(achievements) {
-      const container = document.getElementById('achievementsContainer');
-      container.innerHTML = '';
-      
-      achievements.forEach((achievement, index) => {
-        setTimeout(() => {
-          const badge = document.createElement('div');
-          badge.className = `achievement-badge ${achievement.class}`;
-          badge.innerHTML = `<span>${achievement.icon}</span> ${achievement.text}`;
-          badge.title = `Achievement unlocked: ${achievement.text}`;
-          container.appendChild(badge);
-        }, index * 200);
-      });
-      
-      if (achievements.length > 0) {
-        container.style.display = 'flex';
-      }
+    function shareOnWhatsApp() {
+      if (!window.latestStats) return alert("Calculate first!");
+      const text = `I've lived ${window.latestStats.daysLived.toLocaleString()} days! ${window.latestStats.milestone || ""} 🎉 Check yours: ${window.location.href}`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
     }
-
-    // Display fun comparisons
-    function showComparisons(comparisons) {
-      const container = document.getElementById('comparisons');
-      const list = document.getElementById('comparisonsList');
-      list.innerHTML = '';
-      
-      comparisons.forEach((comparison, index) => {
-        setTimeout(() => {
-          const item = document.createElement('div');
-          item.className = 'comparison-item';
-          item.textContent = comparison;
-          list.appendChild(item);
-        }, index * 150);
-      });
-      
-      container.style.display = 'block';
-    }
-
-    // Copy to clipboard function
-    function copyToClipboard(text) {
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-          alert('✅ Copied to clipboard!');
-        }).catch(() => {
-          fallbackCopy(text);
-        });
-      } else {
-        fallbackCopy(text);
-      }
-    }
-
-    function fallbackCopy(text) {
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-9999px';
-      document.body.appendChild(textArea);
-      textArea.select();
-      
-      try {
-        document.execCommand('copy');
-        alert('✅ Copied to clipboard!');
-      } catch (err) {
-        alert('Unable to copy. Please manually copy the text.');
-      }
-      
-      document.body.removeChild(textArea);
-    }
-
-    // Main form submission
-    document.getElementById("lifeForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      
-      try {
-        const dobInput = document.getElementById("dob").value;
-        if (!dobInput) return;
-
-        const dob = new Date(dobInput);
-        const today = new Date();
-
-        // Age in days
-        const diffTime = today - dob;
-        const ageInDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-        // Age in years
-        let ageInYears = today.getFullYear() - dob.getFullYear();
-        const hasHadBirthday =
-          today.getMonth() > dob.getMonth() ||
-          (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
-        if (!hasHadBirthday) ageInYears--;
-
-        // Next birthday
-        let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
-        if (today > nextBirthday) {
-          nextBirthday.setFullYear(today.getFullYear() + 1);
-        }
-        const daysUntilBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
-
-        // Life progress
-        const lifeExpectancy = 80 * 365;
-        const lifeProgress = (ageInDays / lifeExpectancy) * 100;
-
-        // Create share text
-        const shareText = `🎉 I've lived ${ageInDays.toLocaleString()} days (${ageInYears} years)! Next birthday in ${daysUntilBirthday} days. Life progress: ${lifeProgress.toFixed(1)}% ⏳
-
-✨ Calculate yours: ${window.location.href}`;
-
-        // Update results with share buttons included
-        document.getElementById("results").innerHTML = `
-          <p>📅 You have lived <strong>${ageInDays.toLocaleString()}</strong> days.</p>
-          <p>🌟 You are <strong>${ageInYears}</strong> years old.</p>
-          <p>🎂 Your next birthday is in <strong>${daysUntilBirthday}</strong> days.</p>
-          <p>⏳ Estimated life progress: <strong>${lifeProgress.toFixed(1)}%</strong></p>
-          
-          <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea, #764ba2, #f093fb); border-radius: 20px; color: white; box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);">
-            <h3 style="text-align: center; margin-bottom: 25px; color: white; font-size: 1.5rem;">🎉 Share Your Life Stats</h3>
-            
-            <div style="margin-bottom: 25px;">
-              <div style="margin: 10px 0; padding: 12px 15px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
-                <span>📅 Days Lived:</span> <strong>${ageInDays.toLocaleString()}</strong>
-              </div>
-              <div style="margin: 10px 0; padding: 12px 15px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
-                <span>🌟 Age:</span> <strong>${ageInYears} years</strong>
-              </div>
-              <div style="margin: 10px 0; padding: 12px 15px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
-                <span>🎂 Next Birthday:</span> <strong>in ${daysUntilBirthday} days</strong>
-              </div>
-              <div style="margin: 10px 0; padding: 12px 15px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
-                <span>⏳ Life Progress:</span> <strong>${lifeProgress.toFixed(1)}%</strong>
-              </div>
-            </div>
-            
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-              <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}" target="_blank" style="display: block; background: #1da1f2; color: white; padding: 15px 20px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.3s ease;">
-                🐦 Share on Twitter/X
-              </a>
-              <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}" target="_blank" style="display: block; background: #1877f2; color: white; padding: 15px 20px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.3s ease;">
-                📘 Share on Facebook
-              </a>
-              <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="display: block; background: #25d366; color: white; padding: 15px 20px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.3s ease;">
-                💬 Share on WhatsApp
-              </a>
-              <button onclick="copyToClipboard('${shareText.replace(/'/g, "\\\'")}')" style="display: block; background: #6c757d; color: white; padding: 15px 20px; border-radius: 12px; border: none; text-align: center; font-weight: 600; cursor: pointer; width: 100%; font-family: inherit; transition: all 0.3s ease;">
-                📋 Copy Stats to Clipboard
-              </button>
-            </div>
-          </div>
-        `;
-
-        // Show achievements and comparisons
-        const achievements = getAchievements(ageInDays, ageInYears, lifeProgress);
-        setTimeout(() => showAchievements(achievements), 1000);
-
-        const comparisons = getFunComparisons(ageInDays, ageInYears);
-        setTimeout(() => showComparisons(comparisons), 1500);
-
-      } catch (error) {
-        console.error("Calculation error:", error);
-        alert("Error calculating stats. Please try again.");
-      }
-    });
   </script>
 </body>
 </html>
