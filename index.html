@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Life Stats Calculator</title>
+  <title>Life Stats Calculator - Days Lived, Life Expectancy & Birthday Countdown</title>
+  <meta name="description" content="Calculate your life statistics - discover days lived, age milestones, and birthday countdown with shareable results.">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,15 +18,80 @@
       min-height: 100vh;
     }
 
+    /* Ad Banner Styles */
+    .ad-banner {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px dashed #ccc;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+      color: #666;
+      border-radius: 12px;
+      font-size: 14px;
+      width: 100%;
+      max-width: 728px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .ad-banner-sidebar {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px dashed #ccc;
+      padding: 15px;
+      margin: 15px 0;
+      text-align: center;
+      color: #666;
+      border-radius: 12px;
+      font-size: 12px;
+      width: 100%;
+      max-width: 300px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Container for main content and sidebar */
+    .content-wrapper {
+      display: flex;
+      gap: 30px;
+      max-width: 1200px;
+      width: 100%;
+      align-items: flex-start;
+      padding: 0 20px;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
     header {
       text-align: center;
       margin-top: 40px;
       color: white;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 20px;
     }
 
     header h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .logo-icon {
+      font-size: 3rem;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
     }
 
     main {
@@ -35,7 +101,7 @@
       padding: 30px;
       margin-top: 30px;
       max-width: 500px;
-      width: 90%;
+      width: 100%;
       text-align: center;
     }
 
@@ -46,11 +112,19 @@
     }
 
     input[type="date"] {
-      padding: 10px;
+      padding: 12px;
       border-radius: 10px;
-      border: 1px solid #ccc;
+      border: 2px solid #e2e8f0;
       width: 100%;
       margin-bottom: 20px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="date"]:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
 
     button {
@@ -58,15 +132,17 @@
       color: white;
       border: none;
       border-radius: 12px;
-      padding: 12px 20px;
-      font-size: 1rem;
+      padding: 14px 24px;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: all 0.3s ease;
+      width: 100%;
     }
 
     button:hover {
-      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
     }
 
     #results {
@@ -76,7 +152,11 @@
 
     #results p {
       font-size: 1.1rem;
-      margin: 8px 0;
+      margin: 12px 0;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
     }
 
     /* Share card */
@@ -89,6 +169,8 @@
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.25);
       display: none;
+      max-width: 500px;
+      width: 100%;
     }
 
     .share-card h3 {
@@ -124,6 +206,7 @@
 
     .share-buttons a:hover {
       opacity: 0.85;
+      transform: translateY(-1px);
     }
 
     /* Milestone badges */
@@ -133,7 +216,7 @@
       justify-content: center;
       gap: 10px;
       margin-top: 18px;
-      padding: 10px 18px;
+      padding: 12px 20px;
       border-radius: 30px;
       font-weight: 700;
       font-size: 1.1rem;
@@ -171,50 +254,127 @@
       margin: 40px 0;
       color: white;
       font-size: 0.9rem;
+      text-align: center;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 20px;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sidebar {
+        width: 100%;
+        max-width: 500px;
+      }
+
+      header h1 {
+        font-size: 2.2rem;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        font-size: 2.5rem;
+      }
+
+      .ad-banner {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>🎂 Life Stats Calculator</h1>
-    <p>Find out how many days you’ve lived and your life milestones!</p>
+    <h1><span class="logo-icon">📊</span> Life Stats Calculator</h1>
+    <p>Find out how many days you've lived and your life milestones!</p>
   </header>
 
-  <main>
-    <form id="lifeForm">
-      <label for="dob">Enter your date of birth:</label>
-      <input type="date" id="dob" required />
-      <button type="submit">Calculate</button>
-    </form>
+  <!-- Top Ad Banner -->
+  <div class="ad-banner">
+    <strong>Advertisement Space</strong><br>
+    728x90 Leaderboard Banner - High visibility placement for maximum ad revenue
+  </div>
 
-    <div id="results"></div>
+  <div class="content-wrapper">
+    <div class="main-content">
+      <main>
+        <form id="lifeForm">
+          <label for="dob">Enter your date of birth:</label>
+          <input type="date" id="dob" required />
+          <button type="submit">✨ Calculate My Life Stats</button>
+        </form>
 
-    <!-- Share Card Section -->
-    <div class="share-card" id="shareCard">
-      <h3>🎉 Share Your Life Stats</h3>
-      <div class="share-content">
-        <p>📅 Days Lived: <span id="shareDaysLived">0</span></p>
-        <p>🌟 Age: <span id="shareAge">0</span> years</p>
-        <p>🎂 Next Birthday: in <span id="shareNextBirthday">0</span> days</p>
-        <p>⏳ Life Progress: <span id="shareProgress">0%</span></p>
+        <div id="results"></div>
 
-        <!-- Milestone badge -->
-        <div id="milestoneBadge" class="milestone-badge" style="display: none;">
-          <span id="milestoneIcon">🏅</span>
-          <span id="milestoneMessage">Milestone unlocked!</span>
+        <!-- Share Card Section -->
+        <div class="share-card" id="shareCard">
+          <h3>🎉 Share Your Life Stats</h3>
+          <div class="share-content">
+            <p>📅 Days Lived: <span id="shareDaysLived">0</span></p>
+            <p>🌟 Age: <span id="shareAge">0</span> years</p>
+            <p>🎂 Next Birthday: in <span id="shareNextBirthday">0</span> days</p>
+            <p>⏳ Life Progress: <span id="shareProgress">0%</span></p>
+
+            <!-- Milestone badge -->
+            <div id="milestoneBadge" class="milestone-badge" style="display: none;">
+              <span id="milestoneIcon">🏅</span>
+              <span id="milestoneMessage">Milestone unlocked!</span>
+            </div>
+          </div>
+
+          <div class="share-buttons">
+            <a id="twitterShare" target="_blank">🐦 Share on Twitter/X</a>
+            <a id="facebookShare" target="_blank">📘 Share on Facebook</a>
+            <a id="whatsappShare" target="_blank">💬 Share on WhatsApp</a>
+          </div>
         </div>
-      </div>
+      </main>
 
-      <div class="share-buttons">
-        <a id="twitterShare" target="_blank">🐦 Share on Twitter/X</a>
-        <a id="facebookShare" target="_blank">📘 Share on Facebook</a>
-        <a id="whatsappShare" target="_blank">💬 Share on WhatsApp</a>
+      <!-- In-content Ad Banner -->
+      <div class="ad-banner" style="margin-top: 30px;">
+        <strong>Advertisement Space</strong><br>
+        728x90 Banner - Perfect placement after results for high engagement
       </div>
     </div>
-  </main>
+
+    <div class="sidebar">
+      <!-- Sidebar Ad 1 -->
+      <div class="ad-banner-sidebar">
+        <strong>Advertisement</strong><br>
+        300x250 Medium Rectangle<br>
+        Premium sidebar placement
+      </div>
+
+      <!-- Sidebar Ad 2 -->
+      <div class="ad-banner-sidebar">
+        <strong>Advertisement</strong><br>
+        300x600 Half Page<br>
+        High-value vertical ad space
+      </div>
+
+      <!-- Sidebar Ad 3 -->
+      <div class="ad-banner-sidebar">
+        <strong>Advertisement</strong><br>
+        300x250 Medium Rectangle<br>
+        Additional revenue opportunity
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Ad Banner -->
+  <div class="ad-banner">
+    <strong>Advertisement Space</strong><br>
+    728x90 Bottom Banner - Excellent placement for retargeting and engagement
+  </div>
 
   <footer>
     <p>✨ Made for fun — share your stats and celebrate milestones!</p>
+    <p>Life Stats Calculator - Your journey in numbers</p>
   </footer>
 
   <script>
@@ -262,15 +422,16 @@
       document.getElementById('shareNextBirthday').textContent = daysUntilBirthday;
       document.getElementById('shareProgress').textContent = lifeProgress.toFixed(1) + "%";
 
-      // Build share messages
+      // Build share messages - Update with your actual domain
+      const siteUrl = window.location.href; // Uses current URL
       const shareText = encodeURIComponent(
         `🎉 I've lived ${ageInDays.toLocaleString()} days (${ageInYears} years)! ` +
         `Next birthday in ${daysUntilBirthday} days. Life progress: ${lifeProgress.toFixed(1)}% ⏳\n\n` +
-        `✨ Calculate yours: YOURSITE.com`
+        `✨ Calculate yours: ${siteUrl}`
       );
 
       document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${shareText}`;
-      document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=YOURSITE.com&quote=${shareText}`;
+      document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}&quote=${shareText}`;
       document.getElementById('whatsappShare').href = `https://wa.me/?text=${shareText}`;
 
       // Milestone gamification
@@ -312,6 +473,17 @@
 
       // Show share card
       document.getElementById('shareCard').style.display = 'block';
+
+      // Scroll to results
+      document.getElementById('results').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+
+    // Set max date to today
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('dob').max = new Date().toISOString().split('T')[0];
     });
   </script>
 </body>
