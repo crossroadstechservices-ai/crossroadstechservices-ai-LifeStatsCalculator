@@ -222,14 +222,6 @@
       color: var(--text-primary);
     }
 
-    /* Counting animation */
-    .counting-number {
-      display: inline-block;
-      min-width: 60px;
-      font-weight: bold;
-      color: #667eea;
-    }
-
     /* Achievement badges */
     .achievements-container {
       margin: 20px 0;
@@ -290,166 +282,6 @@
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Share card - Enhanced */
-    .share-card {
-      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb) !important;
-      color: white !important;
-      border-radius: 20px !important;
-      padding: 25px !important;
-      margin: 20px 0 !important;
-      text-align: center !important;
-      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3) !important;
-      display: none !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      box-sizing: border-box !important;
-      position: relative !important;
-      overflow: hidden !important;
-    }
-
-    .share-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-      animation: shimmer 3s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(180deg); }
-    }
-
-    .share-card h3 {
-      font-size: 1.5rem !important;
-      margin-bottom: 20px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 10px !important;
-      color: white !important;
-      position: relative !important;
-      z-index: 2 !important;
-    }
-
-    .share-content {
-      margin-bottom: 25px !important;
-      width: 100% !important;
-      position: relative !important;
-      z-index: 2 !important;
-    }
-
-    .share-content p {
-      font-size: 1rem !important;
-      margin: 8px 0 !important;
-      font-weight: 600 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: flex-start !important;
-      background: rgba(255, 255, 255, 0.15) !important;
-      padding: 12px 15px !important;
-      border-radius: 10px !important;
-      backdrop-filter: blur(10px) !important;
-      color: white !important;
-      text-align: left !important;
-      gap: 8px !important;
-    }
-
-    .share-content p span:first-child {
-      margin-right: 8px !important;
-      flex-shrink: 0 !important;
-    }
-
-    .share-content p strong {
-      color: white !important;
-      font-weight: 700 !important;
-      margin-left: auto !important;
-    }
-
-    .share-buttons {
-      margin-top: 20px !important;
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 10px !important;
-      width: 100% !important;
-      position: relative !important;
-      z-index: 2 !important;
-    }
-
-    .share-buttons a {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 10px !important;
-      padding: 12px 20px !important;
-      border-radius: 10px !important;
-      text-decoration: none !important;
-      font-weight: 600 !important;
-      font-size: 0.9rem !important;
-      transition: all 0.3s ease !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-    }
-
-    #twitterShare { background: #1da1f2; color: white; }
-    #facebookShare { background: #1877f2; color: white; }
-    #whatsappShare { background: #25d366; color: white; }
-
-    .share-buttons a:hover {
-      opacity: 0.85;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
-    /* Milestone badges */
-    .milestone-badge {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 10px !important;
-      margin: 20px auto !important;
-      padding: 12px 20px !important;
-      border-radius: 30px !important;
-      font-weight: 700 !important;
-      font-size: 1rem !important;
-      color: #2d3748 !important;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.25) !important;
-      animation: popIn 0.6s ease !important;
-      max-width: fit-content !important;
-      position: relative !important;
-      z-index: 2 !important;
-    }
-
-    .badge-gold {
-      background: linear-gradient(135deg, #ffd700, #ffb347);
-      color: #2d3748;
-    }
-
-    .badge-platinum {
-      background: linear-gradient(135deg, #cfd9df, #e2ebf0);
-      color: #1a202c;
-    }
-
-    .badge-blue {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-    }
-
-    .badge-red {
-      background: linear-gradient(135deg, #ff416c, #ff4b2b);
-      color: white;
-    }
-
-    @keyframes popIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); opacity: 1; }
     }
 
     /* Bottom ads alignment */
@@ -556,29 +388,6 @@
           <h3 style="margin-bottom: 15px; color: var(--text-primary);">🎯 Fun Comparisons</h3>
           <div id="comparisonsList"></div>
         </div>
-
-        <!-- Share Card Section -->
-        <div class="share-card" id="shareCard">
-          <h3><span>🎉</span> Share Your Life Stats</h3>
-          <div class="share-content">
-            <p><span>📅</span> <span>Days Lived:</span> <strong><span id="shareDaysLived">0</span></strong></p>
-            <p><span>🌟</span> <span>Age:</span> <strong><span id="shareAge">0</span> years</strong></p>
-            <p><span>🎂</span> <span>Next Birthday:</span> <strong>in <span id="shareNextBirthday">0</span> days</strong></p>
-            <p><span>⏳</span> <span>Life Progress:</span> <strong><span id="shareProgress">0%</span></strong></p>
-
-            <!-- Milestone badge -->
-            <div id="milestoneBadge" class="milestone-badge" style="display: none;">
-              <span id="milestoneIcon">🏅</span>
-              <span id="milestoneMessage">Milestone unlocked!</span>
-            </div>
-          </div>
-
-          <div class="share-buttons">
-            <a id="twitterShare" target="_blank"><span>🐦</span> Share on Twitter/X</a>
-            <a id="facebookShare" target="_blank"><span>📘</span> Share on Facebook</a>
-            <a id="whatsappShare" target="_blank"><span>💬</span> Share on WhatsApp</a>
-          </div>
-        </div>
       </main>
 
       <!-- In-content Ad Banner -->
@@ -657,31 +466,6 @@
       document.getElementById('dob').max = new Date().toISOString().split('T')[0];
     });
 
-    // Counting animation function
-    function animateNumber(element, start, end, duration = 1000) {
-      const startTime = performance.now();
-      const difference = end - start;
-      
-      function updateNumber(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // Easing function for smooth animation
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const current = Math.floor(start + (difference * easeOut));
-        
-        element.textContent = current.toLocaleString();
-        
-        if (progress < 1) {
-          requestAnimationFrame(updateNumber);
-        } else {
-          element.textContent = end.toLocaleString();
-        }
-      }
-      
-      requestAnimationFrame(updateNumber);
-    }
-
     // Achievement system
     function getAchievements(ageInDays, ageInYears, lifeProgress) {
       const achievements = [];
@@ -722,7 +506,6 @@
     function getFunComparisons(ageInDays, ageInYears) {
       const comparisons = [];
       
-      // Historical comparisons
       const breathsCount = (ageInDays * 20000).toLocaleString();
       const heartbeats = (ageInDays * 100000).toLocaleString();
       const sleepHours = Math.floor(ageInDays * 8).toLocaleString();
@@ -742,7 +525,6 @@
         comparisons.push(`🪐 Earth has orbited the sun ${earthOrbits} times during your life`);
       }
       
-      // Fun milestone comparisons
       if (ageInDays > 1000) {
         comparisons.push(`🎯 You've surpassed the average lifespan of ${Math.floor(ageInDays / 365)} dogs`);
       }
@@ -788,152 +570,19 @@
       container.style.display = 'block';
     }
 
-    document.getElementById("lifeForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const dobInput = document.getElementById("dob").value;
-      if (!dobInput) return;
-
-      const dob = new Date(dobInput);
-      const today = new Date();
-
-      // Age in days
-      const diffTime = today - dob;
-      const ageInDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-      // Age in years
-      let ageInYears = today.getFullYear() - dob.getFullYear();
-      const hasHadBirthday =
-        today.getMonth() > dob.getMonth() ||
-        (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
-      if (!hasHadBirthday) ageInYears--;
-
-      // Next birthday
-      let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
-      if (today > nextBirthday) {
-        nextBirthday.setFullYear(today.getFullYear() + 1);
-      }
-      const daysUntilBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
-
-      // Life progress (assuming 80 years avg)
-      const lifeExpectancy = 80 * 365;
-      const lifeProgress = (ageInDays / lifeExpectancy) * 100;
-
-      // Update results section with animated numbers
-      document.getElementById("results").innerHTML = `
-        <p>📅 You have lived <strong><span class="counting-number" id="daysLivedCount">0</span></strong> days.</p>
-        <p>🌟 You are <strong><span class="counting-number" id="ageCount">0</span></strong> years old.</p>
-        <p>🎂 Your next birthday is in <strong><span class="counting-number" id="birthdayCount">0</span></strong> days.</p>
-        <p>⏳ Estimated life progress: <strong><span class="counting-number" id="progressCount">0</span>%</strong></p>
-      `;
-
-      // Animate the numbers
-      setTimeout(() => {
-        animateNumber(document.getElementById('daysLivedCount'), 0, ageInDays, 1500);
-        animateNumber(document.getElementById('ageCount'), 0, ageInYears, 1000);
-        animateNumber(document.getElementById('birthdayCount'), 0, daysUntilBirthday, 800);
-        animateNumber(document.getElementById('progressCount'), 0, Math.floor(lifeProgress * 10) / 10, 1200);
-      }, 100);
-
-      // Get and show achievements
-      const achievements = getAchievements(ageInDays, ageInYears, lifeProgress);
-      setTimeout(() => showAchievements(achievements), 1000);
-
-      // Get and show fun comparisons
-      const comparisons = getFunComparisons(ageInDays, ageInYears);
-      setTimeout(() => showComparisons(comparisons), 1500);
-
-      // Update share card values
-      document.getElementById('shareDaysLived').textContent = ageInDays.toLocaleString();
-      document.getElementById('shareAge').textContent = ageInYears;
-      document.getElementById('shareNextBirthday').textContent = daysUntilBirthday;
-      document.getElementById('shareProgress').textContent = lifeProgress.toFixed(1) + "%";
-
-      // Build share messages - Update with your actual domain
-      const siteUrl = window.location.href; // Uses current URL
-      const shareText = encodeURIComponent(
-        `🎉 I've lived ${ageInDays.toLocaleString()} days (${ageInYears} years)! ` +
-        `Next birthday in ${daysUntilBirthday} days. Life progress: ${lifeProgress.toFixed(1)}% ⏳\n\n` +
-        `✨ Calculate yours: ${siteUrl}`
-      );
-
-      document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${shareText}`;
-      document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}&quote=${shareText}`;
-      document.getElementById('whatsappShare').href = `https://wa.me/?text=${shareText}`;
-
-      // Handle milestone from original code
-      let milestoneMsg = "";
-      let milestoneIcon = "🏅";
-      let badgeClass = "";
-
-      if (ageInDays >= 20000) {
-        milestoneMsg = "Legend! You've crossed 20k days!";
-        milestoneIcon = "🏆";
-        badgeClass = "badge-platinum";
-      } else if (ageInDays >= 10000) {
-        milestoneMsg = "Welcome to the 10k Days Club!";
-        milestoneIcon = "🥇";
-        badgeClass = "badge-gold";
-      }
-
-      if (lifeProgress >= 50 && lifeProgress < 51) {
-        milestoneMsg = "Halfway Milestone! Keep going strong!";
-        milestoneIcon = "⏳";
-        badgeClass = "badge-blue";
-      }
-
-      if (lifeProgress >= 90) {
-        milestoneMsg = "Final stretch! Make every moment count!";
-        milestoneIcon = "🔥";
-        badgeClass = "badge-red";
-      }
-
-      const badge = document.getElementById('milestoneBadge');
-      if (milestoneMsg) {
-        document.getElementById('milestoneMessage').textContent = milestoneMsg;
-        document.getElementById('milestoneIcon').textContent = milestoneIcon;
-        badge.className = "milestone-badge " + badgeClass;
-        badge.style.display = 'inline-flex';
-      } else {
-        badge.style.display = 'none';
-      }
-
-      // Show share card
-      setTimeout(() => {
-        document.getElementById('shareCard').style.display = 'block';
-        
-        // Scroll to results
-        document.getElementById('results').scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }, 2000);
-    });
-
-    // Copy stats to clipboard function
-    function copyStatsToClipboard() {
-      const daysLived = document.getElementById('shareDaysLived').textContent;
-      const age = document.getElementById('shareAge').textContent;
-      const nextBirthday = document.getElementById('shareNextBirthday').textContent;
-      const progress = document.getElementById('shareProgress').textContent;
-      const siteUrl = window.location.href;
-      
-      const statsText = `🎉 I've lived ${daysLived} days (${age} years)! Next birthday in ${nextBirthday} days. Life progress: ${progress} ⏳
-
-✨ Calculate yours: ${siteUrl}`;
-
-      // Try to copy to clipboard
+    // Copy to clipboard function
+    function copyToClipboard(text) {
       if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(statsText).then(() => {
-          showCopySuccess();
+        navigator.clipboard.writeText(text).then(() => {
+          alert('✅ Copied to clipboard!');
         }).catch(() => {
-          fallbackCopy(statsText);
+          fallbackCopy(text);
         });
       } else {
-        fallbackCopy(statsText);
+        fallbackCopy(text);
       }
     }
 
-    // Fallback copy method for older browsers
     function fallbackCopy(text) {
       const textArea = document.createElement('textarea');
       textArea.value = text;
@@ -944,7 +593,7 @@
       
       try {
         document.execCommand('copy');
-        showCopySuccess();
+        alert('✅ Copied to clipboard!');
       } catch (err) {
         alert('Unable to copy. Please manually copy the text.');
       }
@@ -952,19 +601,98 @@
       document.body.removeChild(textArea);
     }
 
-    // Show copy success animation
-    function showCopySuccess() {
-      const copyBtn = document.querySelector('.copy-stats-btn');
-      const originalText = copyBtn.innerHTML;
+    // Main form submission
+    document.getElementById("lifeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
       
-      copyBtn.innerHTML = '<span>✅</span> Copied!';
-      copyBtn.classList.add('copied');
-      
-      setTimeout(() => {
-        copyBtn.innerHTML = originalText;
-        copyBtn.classList.remove('copied');
-      }, 2000);
-    }
+      try {
+        const dobInput = document.getElementById("dob").value;
+        if (!dobInput) return;
+
+        const dob = new Date(dobInput);
+        const today = new Date();
+
+        // Age in days
+        const diffTime = today - dob;
+        const ageInDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        // Age in years
+        let ageInYears = today.getFullYear() - dob.getFullYear();
+        const hasHadBirthday =
+          today.getMonth() > dob.getMonth() ||
+          (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+        if (!hasHadBirthday) ageInYears--;
+
+        // Next birthday
+        let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+        if (today > nextBirthday) {
+          nextBirthday.setFullYear(today.getFullYear() + 1);
+        }
+        const daysUntilBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+
+        // Life progress
+        const lifeExpectancy = 80 * 365;
+        const lifeProgress = (ageInDays / lifeExpectancy) * 100;
+
+        // Create share text
+        const shareText = `🎉 I've lived ${ageInDays.toLocaleString()} days (${ageInYears} years)! Next birthday in ${daysUntilBirthday} days. Life progress: ${lifeProgress.toFixed(1)}% ⏳
+
+✨ Calculate yours: ${window.location.href}`;
+
+        // Update results with share buttons included
+        document.getElementById("results").innerHTML = `
+          <p>📅 You have lived <strong>${ageInDays.toLocaleString()}</strong> days.</p>
+          <p>🌟 You are <strong>${ageInYears}</strong> years old.</p>
+          <p>🎂 Your next birthday is in <strong>${daysUntilBirthday}</strong> days.</p>
+          <p>⏳ Estimated life progress: <strong>${lifeProgress.toFixed(1)}%</strong></p>
+          
+          <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea, #764ba2, #f093fb); border-radius: 20px; color: white; box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);">
+            <h3 style="text-align: center; margin-bottom: 25px; color: white; font-size: 1.5rem;">🎉 Share Your Life Stats</h3>
+            
+            <div style="margin-bottom: 25px;">
+              <div style="margin: 10px 0; padding: 12px 15px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span>📅 Days Lived:</span> <strong>${ageInDays.toLocaleString()}</strong>
+              </div>
+              <div style="margin: 10px 0; padding: 12px 15px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span>🌟 Age:</span> <strong>${ageInYears} years</strong>
+              </div>
+              <div style="margin: 10px 0; padding: 12px 15px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span>🎂 Next Birthday:</span> <strong>in ${daysUntilBirthday} days</strong>
+              </div>
+              <div style="margin: 10px 0; padding: 12px 15px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span>⏳ Life Progress:</span> <strong>${lifeProgress.toFixed(1)}%</strong>
+              </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}" target="_blank" style="display: block; background: #1da1f2; color: white; padding: 15px 20px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.3s ease;">
+                🐦 Share on Twitter/X
+              </a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}" target="_blank" style="display: block; background: #1877f2; color: white; padding: 15px 20px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.3s ease;">
+                📘 Share on Facebook
+              </a>
+              <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="display: block; background: #25d366; color: white; padding: 15px 20px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.3s ease;">
+                💬 Share on WhatsApp
+              </a>
+              <button onclick="copyToClipboard('${shareText.replace(/'/g, "\\\'")}')" style="display: block; background: #6c757d; color: white; padding: 15px 20px; border-radius: 12px; border: none; text-align: center; font-weight: 600; cursor: pointer; width: 100%; font-family: inherit; transition: all 0.3s ease;">
+                📋 Copy Stats to Clipboard
+              </button>
+            </div>
+          </div>
+        `;
+
+        // Show achievements and comparisons
+        const achievements = getAchievements(ageInDays, ageInYears, lifeProgress);
+        setTimeout(() => showAchievements(achievements), 1000);
+
+        const comparisons = getFunComparisons(ageInDays, ageInYears);
+        setTimeout(() => showComparisons(comparisons), 1500);
+
+      } catch (error) {
+        console.error("Calculation error:", error);
+        alert("Error calculating stats. Please try again.");
+      }
+    });
   </script>
 </body>
 </html>
